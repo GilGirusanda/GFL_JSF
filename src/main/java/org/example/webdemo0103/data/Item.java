@@ -7,30 +7,15 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity
-@Table(name = "book")
-@NamedQueries({
-        @NamedQuery(name = "Book.findAll", query = "select b from Book b")
-})
-public class Book {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+public class Item {
 
-    @Size(max = 30)
-    @Column(name = "author", length = 30)
-    private String author;
+    private Double x;
 
-    @Size(max = 100)
-    @Column(name = "title", length = 100)
-    private String title;
+    private Double y;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_id")
-    private Student student;
-
-    @Column(name = "pages")
-    private Integer pages;
+    public Item(Double x, Double y) {
+        this.x = x;
+        this.y = y;
+    }
 
 }

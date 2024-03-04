@@ -8,30 +8,48 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:view>
     <h:head>
-        <title>Books</title>
+        <title>Items</title>
     </h:head>
     <h:body>
-        <h:form id="mainform">
-            <h:panelGrid columns="2">
-            <p:outputLabel value="Назва" for="title"/>
-            <p:inputText id="title" value="#{bookBean.book.title}"/>
-            <p:outputLabel value="Автор" for="author"/>
-            <p:inputText id="author" value="#{bookBean.book.author}"/>
-            <p:outputLabel value="Стор" for="pages"/>
-            <p:spinner id="pages" value="#{bookBean.book.pages}"/>
-            </h:panelGrid>
-            <p:commandButton value="Додати" action="#{bookBean.addBook()}" update=":mainform"/>
-        <p:dataTable value="#{bookBean.books}" var="b" rowHover="true" stripedRows="true">
-            <p:column headerText="#">
-                <h:outputText value="#{b.id}"/>
-            </p:column>
-            <p:column headerText="Title">
-                <h:outputText value="#{b.title}"/>
-            </p:column>
-            <p:column headerText="Student">
-                <h:outputText value="#{b.studentName}"/>
-            </p:column>
-        </p:dataTable>
+        <h:form style="">
+            <p:commandButton style="background-color: yellow; border-color: burlywood; color: black"
+                             action = "page1"
+                             value = "Check (x,y)" />
+        </h:form>
+        <hr />
+            <p:dataTable id="mydata"
+                         value="#{itemBean.getCurrentPageItems()}"
+                         var="i"
+                         rowHover="true"
+                         stripedRows="true"
+                         pagination="true"
+                         rows="#{itemBean.rowsPerPage}">
+                <p:column headerText="X">
+                    <h:outputText value="#{i.x}">
+                        <f:convertNumber pattern="#0.000" locale="pt_BR"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Y">
+                    <h:outputText value="#{i.y}">
+                        <f:convertNumber pattern="#0.000" locale="pt_BR"/>
+                    </h:outputText>
+                </p:column>
+            </p:dataTable>
+        <br/>
+        <h:form id="buttons">
+            <p:commandButton value="Previous"
+                             action="#{itemBean.previousPage}"
+                             rendered="#{itemBean.isHasPrev()}"
+                             update="mydata buttons"
+                             process="@this mydata"/>
+            &nbsp;
+            <p:outputLabel value="#{itemBean.currentPage} / #{itemBean.getTotalPages()}"/>
+            &nbsp;
+            <p:commandButton value="Next"
+                             action="#{itemBean.nextPage}"
+                             rendered="#{itemBean.isHasNext()}"
+                             update="mydata buttons"
+                             process="@this mydata"/>
         </h:form>
     </h:body>
 </f:view>
