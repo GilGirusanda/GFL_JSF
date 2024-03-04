@@ -7,25 +7,25 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
-import org.example.webdemo0103.dao.BookDao;
-import org.example.webdemo0103.data.Book;
-import org.example.webdemo0103.dto.BookDto;
+import org.example.webdemo0103.dao.ItemDao;
+import org.example.webdemo0103.data.Item;
+import org.example.webdemo0103.dto.ItemDto;
 
 import java.io.Serializable;
 import java.util.List;
 
 @Named
 @SessionScoped
-public class BookBean implements Serializable {
+public class ItemBean implements Serializable {
     @EJB
-    private BookDao bookDao;
+    private ItemDao itemDao;
 
     @Inject
     private Converter converter;
 
     @Getter
     @Setter
-    private Book book = new Book();
+    private Item item = new Item();
 
     public List<BookDto> getBooks() {
         return bookDao.findAll().stream().map(converter::bookToBookDto).toList();
